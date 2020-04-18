@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%Modelo de maquina termica MACI
+%%Model of Thermal Machine MACI - course @ UPC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% PROPIEDADES
@@ -12,7 +12,7 @@ Cv = Cp - R %[J/mol K]
 M  = 28.9 %[grs/mol]
 M  = M/1000; %[kg/mol]
 k  = Cp/Cv %[]
-ENT = 0.179 %[J/ mol·K]
+ENT = 0.179 %[J/ molÂ·K]
 
 %Geometria cilindro
 Vcu = 400 %[cm3]
@@ -43,11 +43,11 @@ alpha = linspace(alphamin, alphamax, N); %[rad]
 alpha_grad = alpha*180/pi;
 
 %Distribucion
-ini_comp = 0 %[º]
+ini_comp = 0 %[Âº]
 ini_comp = ini_comp/180*pi; %[rad]
-ini_exp = 180 %[º]
+ini_exp = 180 %[Âº]
 ini_exp = ini_exp/180*pi; %[rad]
-ini_comb = 180 %[º]
+ini_comb = 180 %[Âº]
 ini_comb = ini_comb/180*pi; %[rad]
 
 ind_comp = find(alpha > ini_comp & alpha < ini_comb);
@@ -56,9 +56,9 @@ ind_comb = ind_exp(1);
 %ind_exp = ind_exp(2:end);
 
 %Modelo de combustion
-IC = 35 %[º]
+IC = 35 %[Âº]
 IC = IC/180*pi; %[rad]
-AC = 90 %[º]
+AC = 90 %[Âº]
 AC = AC/180*pi; %[rad]
 a_wiebe = 7
 m_wiebe = 3
@@ -75,35 +75,35 @@ V = Vcc + (CA - x) * S; %[m^3]
 %Plot cinematica
 figure
 plot(alpha_grad,x)
-xlabel('\alpha [º]')
+xlabel('\alpha [Âº]')
 ylabel('Distancia [m]')
 grid on
 set(gcf,'Color',[1 1 1]);
 
 figure
 plot(alpha_grad,v)
-xlabel('\alpha [º]')
+xlabel('\alpha [Âº]')
 ylabel('Velocidad [m/s]')
 grid on
 set(gcf,'Color',[1 1 1]);
 
 figure
 plot(alpha_grad,a)
-xlabel('\alpha [º]')
+xlabel('\alpha [Âº]')
 ylabel('Aceleracion [m/s^2]')
 grid on
 set(gcf,'Color',[1 1 1]);
 
 figure
 plot(alpha_grad,V*1000000)
-xlabel('\alpha [º]')
+xlabel('\alpha [Âº]')
 ylabel('Volumen [cm^3]')
 grid on
 set(gcf,'Color',[1 1 1]);
 
 
 %% CONDICIONES INICIALES
-T1 = 15 %[º]
+T1 = 15 %[Âº]
 T1 = T1 + 273; %[K]
 P1 = 1 %[atm]
 P1 = P1 * 100000; %[Pa]
@@ -189,7 +189,7 @@ for i=2:N,
     %S_real(i) = S_real(i-1) + delta_Q_wiebe(i) / T_real(i-1);
     S_real(i) = S_real(i-1) + Cv * log(T_real(i)/T_real(i-1)) + R * log(V(i)/V(i-1));
 
-    %Extracción de calor
+    %ExtracciÃ³n de calor
     perdidas = 1500 * pi * D * CA / 2 * (T_real_HT(i-1) - 90 + 273) * (2 * pi) / RPM / N ;
     P_real_HT(i) = P_real_HT(i-1) + (delta_Q_wiebe(i) - perdidas - Cp / R * P_real_HT(i-1) * delta_V(i)) * R / Cv / V(i);
     T_real_HT(i) = P_real_HT(i) * V(i) / n / R;
@@ -203,7 +203,7 @@ figure
 h_presion = plot(alpha_grad,P_nc/100000,'LineWidth',2)
 line(alpha_grad,P_teor/100000,'Color','r')
 line(alpha_grad,P_real/100000,'Color','k')
-xlabel('\alpha [º]')
+xlabel('\alpha [Âº]')
 ylabel('Presion [atm]')
 grid on
 set(gcf,'Color',[1 1 1]);
@@ -224,7 +224,7 @@ figure
 h_TS = plot(T_nc - 273,S_nc,'LineWidth',2)
 line(T_nc - 273,S_teor,'Color','r')
 line(T_nc - 273,S_real,'Color','k')
-xlabel('T [º]')
+xlabel('T [Âº]')
 ylabel('S [J/K]')
 grid on
 set(gcf,'Color',[1 1 1]);
@@ -235,7 +235,7 @@ legend('No combustion', 'Ideal', 'Real');
 figure
 h_presion = plot(alpha_grad,P_real/100000,'LineWidth',2)
 line(alpha_grad,P_real_HT/100000,'Color','r')
-xlabel('\alpha [º]')
+xlabel('\alpha [Âº]')
 ylabel('Presion [atm]')
 grid on
 set(gcf,'Color',[1 1 1]);
@@ -253,7 +253,7 @@ legend('Wiebe', 'Wiebe + Nusselt');
 figure
 h_TS = plot(T_nc - 273,S_real,'LineWidth',2)
 line(T_nc - 273,S_real_HT,'Color','r')
-xlabel('T [º]')
+xlabel('T [Âº]')
 ylabel('S [J/K]')
 grid on
 set(gcf,'Color',[1 1 1]);
